@@ -1,0 +1,107 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+                template="/template/template.xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="htmlHead">
+        <meta name="description" content="Our Company Home Page" />
+        <title>Car tracker portal - Route details</title>
+        <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+        <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+        <script src="https://www.amcharts.com/lib/3/gantt.js"></script>
+        <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+        <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+        <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+    </ui:define>
+
+
+    <ui:define name="main">
+        <h:form id="routeDetailsForm">
+            <p:remoteCommand name="fetchChartData"
+                     action="#{dataChart.prepareChartData()}"
+                     oncomplete="updateChartData(xhr, status, args);"/>
+            <div class="ui-g-1">
+
+            </div>   
+            <div class="ui-g-10">
+                <p:outputPanel id="chartPanel">
+                    <div class="row">
+                        <div class="ui-g-1"/>
+                        <p:outputLabel style="font-size: 20px;font-weight: bold" value="Received message"/>
+                    </div>
+                    <div id="chart" style="height: 400px;width: 100%"></div>	
+                    
+                </p:outputPanel>
+
+                <p:outputLabel id="testLabel" value="Test: #{dataChart.newValue}"/>
+   
+            </div>
+            <div class="ui-g-1">
+
+            </div>
+
+
+        </h:form>
+
+        <script type="text/javascript">
+            //<![CDATA[
+            var speedChart = AmCharts.makeChart("chart",
+                    {
+                        "theme": "light",
+                        "type": "serial",
+                        "legend": {
+                            "position": "bottom",
+                            "autoMargins": true,
+                            "useGraphSettings": true
+                        },
+                        "addClassNames": true,
+                        "language": "pl",
+                        "categoryField": "date",
+                        "chartCursor": {
+                            "valueBalloonsEnabled": true,
+                            "categoryBalloonDateFormat": "HH:NN:SS ",
+                            "valueLineEnable": true
+                        },
+                        "graphs": [ {
+                            "id": "g1",
+                            "valueField": "value",
+                            "bullet": "round",
+                            "bulletBorderColor": "#FFFFFF",
+                            "bulletBorderThickness": 2,
+                            "lineThickness": 2,
+                            "lineColor": "#b5030d",
+                            "negativeLineColor": "#0352b5",
+                            "hideBulletsCount": 50 
+                        }],
+                        "valueScrollbar": {
+                            "offset": 15,
+                            "autoGridCount": true
+                        },
+                        "categoryAxis": {
+                            "minorGridEnabled": true,
+                            "parseDates": true,
+                            "minPeriod": "ss"
+                        },
+                        "dataDateFormat": "YYYY-MM-DD HH:NN:SS",
+                        "chartScrollbar": {
+                            "offset": 15,
+                            "autoGridCount": true
+                        },
+                       "dataProvider": #{dataChart.provider}
+                    });
+                    function updateChartData(xhr, status, args) {
+                        var jsonResponse = args.chartData;
+                        console.log("jestem");
+                        console.log(jsonResponse);
+                        speedChart.dataProvider = JSON.parse(jsonResponse);
+                        speedChart.validateData();
+                    //parse it, process it and load it into the chart
+                    }
+                    setInterval("fetchChartData()", 1000);
+            //]]>
+        </script>
+    </ui:define>
+
+</ui:composition>

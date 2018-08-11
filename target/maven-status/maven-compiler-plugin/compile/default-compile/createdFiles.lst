@@ -1,0 +1,4 @@
+com\mycompany\mqttwebclient\DataModel.class
+com\mycompany\mqttwebclient\DataChart.class
+com\mycompany\mqttwebclient\MqttCallbackDelegate.class
+com\mycompany\mqttwebclient\SimpleMqttCallback.class

@@ -1,0 +1,29 @@
+<f:view contentType="text/html"
+    xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+    xmlns:p="http://primefaces.org/ui"
+   >
+    
+
+    <html>
+        <h:head>        
+            
+            <link rel="stylesheet" href="resources/css/customStyles.css"/>
+            <ui:insert name="htmlHead" />
+             <title>My first web page</title>
+        </h:head>
+        <h:body>
+            <p:layout fullPage="true" onResize="update: form">
+ 
+                <p:layoutUnit position="center">
+                        <ui:insert name="main" />
+                </p:layoutUnit>
+
+            </p:layout>
+        </h:body>
+    </html>
+</f:view>
