@@ -6,13 +6,11 @@
 package com.mycompany.mqttwebclient;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.json.JSONArray;
-import java.util.Date;
 import org.json.JSONObject;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.chart.LineChartModel;
@@ -66,15 +64,8 @@ public class DataChart implements Serializable, MqttCallbackDelegate {
     }
 
     @Override
-    public void messageReceived(String message) {
-        JSONObject object = new JSONObject();
-        Date date = new Date();
-        SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        object.put("date", sfd.format(date));
-        object.put("value", "9");  
-        provider.put(object);        
-        System.out.println(message);
-        newValue++;
+    public void messageReceived(JSONObject json) {
+        provider.put(json);        
     }
     
     public void prepareChartData() {

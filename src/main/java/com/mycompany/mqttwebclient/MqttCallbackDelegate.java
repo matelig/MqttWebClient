@@ -5,10 +5,12 @@
  */
 package com.mycompany.mqttwebclient;
 
+import org.json.JSONObject;
+
 /**
  *
  * @author m_lig
  */
 public interface MqttCallbackDelegate {
-    public void messageReceived(String message);
+    public void messageReceived(JSONObject json);
 }
